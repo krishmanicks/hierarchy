@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 public class APIServlet extends HttpServlet {
 
-    private static Logger logger = Logger.getLogger(APIServlet.class.getName());
+    private static final Logger logger = Logger.getLogger(APIServlet.class.getName());
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServerException, IOException{
         try{
