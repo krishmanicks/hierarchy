@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<security name="Hierarchy" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="conf/security-sts.xsd">
+
+    <!-- <urls>
+        <url path="/status"
+            authentication="public"
+            description="Show service's current status" />
+
+        <url path="/monitoring"
+            authentication="public"
+            description="Service status monitoring" />
+    </urls> -->
+
+    <urls>
+        <url path="/"
+             description="Root Route Of the Application"/>
+        <url path="/api"
+             description="Test API Route"/>
+    </urls>
+
+</security>

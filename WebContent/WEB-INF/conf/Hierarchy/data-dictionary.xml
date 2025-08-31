@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<!DOCTYPE data-dictionary SYSTEM "data-dictionary.dtd">
+
+<data-dictionary name="Hierarchy">
+    <description>File Sharing Service</description>
+
+    <!--NOTE: A Temporary Org table that is copied from stratus -->
+    <table name="User">
+        <columns>
+            <column name="ID">
+                <data-type>BIGINT</data-type>
+                <nullable>false</nullable>
+                <uniquevalue-generation>
+                    <generator-name>User.ID</generator-name>
+                </uniquevalue-generation>
+            </column>
+            <column name="NAME">
+                <data-type>CHAR</data-type>
+                <max-size>31</max-size>
+                <nullable>false</nullable>
+            </column>
+            <column name="EMAIL">
+                <data-type>CHAR</data-type>
+                <max-size>64</max-size>
+                <nullable>false</nullable>
+            </column>
+            <column name="PHONE_NUMBER">
+                <data-type>BIGINT</data-type>
+                <default-value>0</default-value>
+                <nullable>false</nullable>
+            </column>
+            <column name="AGE">
+                <data-type>TINYINT</data-type>
+                <default-value>90</default-value>
+                <nullable>false</nullable>
+            </column>
+            <column name="ROLE">
+                <data-type>CHAR</data-type>
+                <max-size>31</max-size>
+                <nullable>false</nullable>
+            </column>
+            <column name="HR_APPROVAL">
+                <data-type>BOOLEAN</data-type>
+                <default-value>true</default-value>
+                <nullable>false</nullable>
+            </column>
+            <column name="APPROVAL_NEEDED">
+                <data-type>BOOLEAN</data-type>
+                <default-value>true</default-value>
+                <nullable>false</nullable>
+            </column>
+            <column name="REPORTING_TO">
+                <data-type>CHAR</data-type>
+                <max-size>64</max-size>
+                <nullable>false</nullable>
+            </column>
+            <column name="UPDATED_JSON">
+                <data-type>CHAR</data-type>
+                <max-size>64</max-size>
+                <nullable>false</nullable>
+            </column>
+        </columns>
+
+        <primary-key name="User_PK">
+            <primary-key-column>ID</primary-key-column>
+        </primary-key>
+
+    </table>
+
+    <table name="Hierarchy">
+        <columns>
+            <column name="ID">
+                <data-type>BIGINT</data-type>
+                <nullable>false</nullable>
+                <uniquevalue-generation>
+                    <generator-name>Hierarchy.ID</generator-name>
+                </uniquevalue-generation>
+            </column>
+            <column name="USER_ID">
+                <data-type>BIGINT</data-type>
+                <default-value>0</default-value>
+                <nullable>false</nullable>
+            </column>
+            <column name="REPORTING_ID">
+                <data-type>BIGINT</data-type>
+                <default-value>0</default-value>
+                <nullable>false</nullable>
+            </column>
+        </columns>
+
+        <primary-key name="Hierarchy_PK">
+            <primary-key-column>ID</primary-key-column>
+        </primary-key>
+
+        <foreign-keys>
+            <foreign-key name="Hierarchy_FK1" reference-table-name="User">
+                <fk-columns>
+                    <fk-column>
+                        <fk-local-column>USER_ID</fk-local-column>
+                        <fk-reference-column>USER_ID</fk-reference-column>
+                    </fk-column>
+                </fk-columns>
+<!--                <fk-constraints>ON-DELETE-CASCADE</fk-constraints>-->
+            </foreign-key>
+            <foreign-key name="Hierarchy_FK2" reference-table-name="User">
+                <fk-columns>
+                    <fk-column>
+                        <fk-local-column>REPORTING_ID</fk-local-column>
+                        <fk-reference-column>REPORTING_ID</fk-reference-column>
+                    </fk-column>
+                </fk-columns>
+<!--                <fk-constraints>ON-DELETE-CASCADE</fk-constraints>-->
+            </foreign-key>
+        </foreign-keys>
+    </table>
+
+    <table name="HrApproval">
+        <columns>
+            <column name="ID">
+                <data-type>BIGINT</data-type>
+                <nullable>false</nullable>
+                <uniquevalue-generation>
+                    <generator-name>HrApproval.ID</generator-name>
+                </uniquevalue-generation>
+            </column>
+            <column name="USER_ID">
+                <data-type>BIGINT</data-type>
+                <default-value>0</default-value>
+                <nullable>false</nullable>
+            </column>
+        </columns>
+
+        <primary-key name="HrApproval_PK">
+            <primary-key-column>ID</primary-key-column>
+        </primary-key>
+
+        <foreign-keys>
+            <foreign-key name="HrApproval_FK1" reference-table-name="User">
+                <fk-columns>
+                    <fk-column>
+                        <fk-local-column>USER_ID</fk-local-column>
+                        <fk-reference-column>USER_ID</fk-reference-column>
+                    </fk-column>
+                </fk-columns>
+                <!--                <fk-constraints>ON-DELETE-CASCADE</fk-constraints>-->
+            </foreign-key>
+
+        </foreign-keys>
+    </table>
+
+    <table name="Approval">
+        <columns>
+            <column name="ID">
+                <data-type>BIGINT</data-type>
+                <nullable>false</nullable>
+                <uniquevalue-generation>
+                    <generator-name>Hierarchy.ID</generator-name>
+                </uniquevalue-generation>
+            </column>
+            <column name="USER_ID">
+                <data-type>BIGINT</data-type>
+                <default-value>0</default-value>
+                <nullable>false</nullable>
+            </column>
+            <column name="APPROVED_BY_ID">
+                <data-type>BIGINT</data-type>
+                <default-value>0</default-value>
+                <nullable>false</nullable>
+            </column>
+            <column name="STATUS">
+                <data-type>CHAR</data-type>
+                <max-size>256</max-size>
+                <nullable>false</nullable>
+            </column>
+        </columns>
+
+        <primary-key name="Approval_PK">
+            <primary-key-column>ID</primary-key-column>
+        </primary-key>
+
+        <foreign-keys>
+            <foreign-key name="Approval_FK1" reference-table-name="User">
+                <fk-columns>
+                    <fk-column>
+                        <fk-local-column>USER_ID</fk-local-column>
+                        <fk-reference-column>USER_ID</fk-reference-column>
+                    </fk-column>
+                </fk-columns>
+                <!--                <fk-constraints>ON-DELETE-CASCADE</fk-constraints>-->
+            </foreign-key>
+            <foreign-key name="Approval_FK2" reference-table-name="User">
+                <fk-columns>
+                    <fk-column>
+                        <fk-local-column>APPROVED_BY_ID</fk-local-column>
+                        <fk-reference-column>APPROVED_BY_ID</fk-reference-column>
+                    </fk-column>
+                </fk-columns>
+                <!--                <fk-constraints>ON-DELETE-CASCADE</fk-constraints>-->
+            </foreign-key>
+        </foreign-keys>
+    </table>
+</data-dictionary>

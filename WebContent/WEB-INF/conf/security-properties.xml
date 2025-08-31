@@ -1,0 +1,16 @@
+<!--$Id$ -->
+<security name="Hierarchy" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="conf/security-sts.xsd">
+    <properties>
+        <property name="service.name" value="Hierarchy"/>
+        <property name="com.adventnet.iam.internal.server" value="https://accounts.csez.zohocorpin.com"/>
+        <property name="login.page" value="/login"/>
+        <property name="logout.page" value="/logout"/>
+        <property name="csrf.cookie.name" value="_hierarchycsrftoken"/>
+        <property name="csrf.param.name" value="_hierarchycsrfparam"/>
+        <property name="disable.authcsrf" value="false"/>
+        <property name="custom.request.methods" value="head"/>
+        <property name="disable.get.api.csrf.check" value="true"/>
+        <property name="use.iam" value="false"/>
+    </properties>
+</security>
