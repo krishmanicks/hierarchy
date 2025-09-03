@@ -1,5 +1,6 @@
 package com.zoho.hierarchy.repository;
 
+import com.adventnet.db.api.RelationalAPI;
 import com.adventnet.ds.query.Column;
 import com.adventnet.ds.query.Criteria;
 import com.adventnet.ds.query.DeleteQuery;
@@ -19,18 +20,35 @@ import com.zoho.hierarchy.dto.User;
 import com.zoho.hierarchy.internal.Tables;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class UserRepositoryImpl implements UserRepository {
 
     @Override
-    public <S extends User> S save(S entity) {
+    public <S extends User> S save(S entity) throws DataAccessException, SQLException {
         DataObject dataObject = new WritableDataObject();
+
+        String database = RelationalAPI.getInstance().getDBAdapter().getDBType();
+//        Logger.getLogger("fdsa").info("db names -------------------------" +   RelationalAPI.getInstance().getTables("hierarchy"));
+        Logger.getLogger("fdsa").info("table names -------------------------" +  database);
+
+        List tablesPresent = RelationalAPI.getInstance().getTables("hierarchy");
+        int size = tablesPresent.size();
+        Logger.getLogger("fdsa").info("size  -------------------------" +  size);
+
         Row row = prepareRow(entity);
         try {
             dataObject.addRow(row);
             DataAccess.add(dataObject);
+
         } catch (DataAccessException e) {
             throw new RuntimeException(e);
         }
@@ -39,10 +57,27 @@ public class UserRepositoryImpl implements UserRepository {
         return entity;
     }
 
+    public void calling(String[] args) throws Exception {
+        String url = "jdbc:mysql://localhost:3306/hierarchy";
+        String user = "app_user";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT DATABASE()")) {
+
+            if (rs.next()) {
+                String schemaName = rs.getString(1);
+                Logger.getLogger("fdsa").info("size  -------------------------" +  schemaName);
+            }
+        }
+    }
+
     @Override
     public Collection<User> findAllById(Long id) {
         return null;
     }
+
 
     private Row prepareRow(User user) {
         Row row = new Row(Tables.UserTable.TABLE_NAME);

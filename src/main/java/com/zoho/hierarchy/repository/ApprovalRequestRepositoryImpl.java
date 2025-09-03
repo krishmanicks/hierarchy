@@ -68,6 +68,15 @@ public class ApprovalRequestRepositoryImpl implements ApprovalRequestRepository 
 
     }
 
+    @Override
+    public Optional<ApprovalRequest> findById(Long id) throws Exception {
+        return findByCriteria(new Criteria(
+                Column.getColumn(Tables.ApprovalTable.TABLE_NAME, Tables.ApprovalTable.ID),
+                id,
+                QueryConstants.EQUAL
+        ));
+    }
+
     private Optional<ApprovalRequest> findByCriteria(Criteria criteria) throws Exception {
         SelectQuery query = prepareSelectQuery();
         query.setCriteria(criteria);
@@ -120,15 +129,6 @@ public class ApprovalRequestRepositoryImpl implements ApprovalRequestRepository 
     }
 
     @Override
-    public Optional<ApprovalRequest> findById(Long id) throws Exception {
-        return findByCriteria(new Criteria(
-                Column.getColumn(Tables.ApprovalTable.TABLE_NAME, Tables.ApprovalTable.ID),
-                id,
-                QueryConstants.EQUAL
-        ));
-    }
-
-    @Override
     public Iterable<ApprovalRequest> findAll() throws Exception {
         return null;
     }
@@ -136,7 +136,7 @@ public class ApprovalRequestRepositoryImpl implements ApprovalRequestRepository 
     @Override
     public void deleteById(Long id) throws Exception {
         DeleteQuery query = new DeleteQueryImpl(Tables.ApprovalTable.TABLE_NAME);
-        query.setCriteria(new Criteria(Column.getColumn(Tables.ApprovalTable.TABLE_NAME, Tables.ApprovalTable.ID), id, QueryConstants.EQUAL));
+        query.setCriteria(new Criteria(Column.getColumn(Tables.ApprovalTable.TABLE_NAME, Tables.ApprovalTable.USER_ID), id, QueryConstants.EQUAL));
         try {
             DataAccess.delete(query);
         } catch (DataAccessException e) {
@@ -164,5 +164,23 @@ public class ApprovalRequestRepositoryImpl implements ApprovalRequestRepository 
         }
 
         return entity;
+    }
+
+    @Override
+    public Optional<ApprovalRequest> findByReportingId(long id) throws Exception {
+        return findByCriteria(new Criteria(
+                Column.getColumn(Tables.ApprovalTable.TABLE_NAME, Tables.ApprovalTable.APPROVED_BY_ID),
+                id,
+                QueryConstants.EQUAL
+        ));
+    }
+
+    @Override
+    public Optional<ApprovalRequest> findByUserId(long userId) throws Exception {
+        return findByCriteria(new Criteria(
+                Column.getColumn(Tables.ApprovalTable.TABLE_NAME, Tables.ApprovalTable.USER_ID),
+                userId,
+                QueryConstants.EQUAL
+        ));
     }
 }

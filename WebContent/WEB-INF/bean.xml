@@ -1,0 +1,17 @@
+<!--Bean created for OAuthAuthentication-->
+<beans>
+
+    <Bean bean_id="Bean:bean_id:UserRepository" bean_name="UserRepository" module_id="Hierarchy"
+          classname="com.zoho.hierarchy.repository.UserRepositoryImpl" transaction_type="3">
+    </Bean>
+
+    <!-- read data from Slave -->
+    <Bean bean_id="Bean:bean_id:NewPersistence" bean_name="NewPersistence" module_id="Persistence" transaction_type="3"
+          classname="com.adventnet.persistence.PersistenceBean">
+        <BeanInterceptor bean_incp_id="BeanInterceptor:bean_incp_id:NewPersistence" order_no="1" incp_name="NPI"
+                         classname="com.adventnet.sas.cache.interceptor.ROPersistenceInterceptor">
+            <BeanInterceptorProperties bean_incp_prop_id="BeanInterceptor:bean_incp_prop_id:NewPersistence"
+                                       property="redirectToMasterOnSlaveFailure" value="true"/>
+        </BeanInterceptor>
+    </Bean>
+</beans>

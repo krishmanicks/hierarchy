@@ -18,7 +18,7 @@ public class RESTAPIController {
         List<String> services = new ArrayList<>();
         services.add("Zoho Stratus"); //No I18N
         services.add("Zoho Nimbus"); //No I18N
-        services.add("Zoho Pagir"); //No I18N
+        services.add("Zoho Hierarchy"); //No I18N
 
         return services;
     }
